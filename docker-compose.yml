@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   nifi:
     image: apache/nifi:1.13.2
@@ -6,21 +7,8 @@ services:
       - 8080:8080
       - 8042:8042
     volumes:
-      - ./nifi/shared:/opt/nifi/nifi-current/ls-target
-      - ./nifi/drivers:/opt/nifi/nifi-current/drivers
-
-  nifi-registry:
-    image: apache/nifi-registry:1.14.0
-    ports:
-      - 18080:18080
-    environment:
-      LOG_LEVEL: INFO
-      NIFI_REGISTRY_DB_DIR: /opt/nifi-registry/database
-      NIFI_REGISTRY_FLOW_PROVIDER: file
-      NIFI_REGISTRY_FLOW_STORAGE_DIR: /opt/nifi-registry/flow_storage
-    volumes:
-      - ./nifi-registry/database:/opt/nifi-registry/database:rw
-      - ./nifi-registry/flow_storage:/opt/nifi-registry/flow_storage:rw
+      - ./nifi-drivers:/opt/nifi/nifi-current/drivers
+      - ./nifi-conf:/opt/nifi/nifi-current/conf
 
   postgre_prod:
     image: postgres:13.4-alpine
